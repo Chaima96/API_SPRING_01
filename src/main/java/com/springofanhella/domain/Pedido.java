@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.springofanhella.domain.enums.Estados_Pedidos;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,7 @@ public class Pedido {
 	private String assunto;
 	private String descricao;
 	private Date dataCriacao;
-	private Estagios_Pedidos estagio;
+	private Estados_Pedidos estagio;
 	private Usuario usuario;
 	private List<Estagios_Pedidos> estagiosPedido = new ArrayList<Estagios_Pedidos>();
 

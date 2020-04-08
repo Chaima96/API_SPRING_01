@@ -3,6 +3,8 @@ package com.springofanhella.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.springofanhella.domain.enums.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ public class Usuario {
 	private String nome;
 	private String email;
 	private String password;
+	private Role role;
 	private List<Pedido> pedidos = new ArrayList<Pedido>(); // Este atributo permite que usuario tenha uma lista de pedidos
 	private List<Estagios_Pedidos> estagios = new ArrayList<Estagios_Pedidos>();
 	
