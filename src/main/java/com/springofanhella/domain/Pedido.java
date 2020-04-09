@@ -1,5 +1,6 @@
 package com.springofanhella.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.ManyToAny;
 
 import com.springofanhella.domain.enums.Estados_Pedidos;
 
@@ -33,8 +33,15 @@ import lombok.Setter;
 
 //uso das anotacoes do JPA (java Persistent API) para persistencia dos objectos Java no Banco de Dados
 @Entity(name = "pedidos")
-public class Pedido {
+public class Pedido implements Serializable {
 	
+	/**
+     * variavel de control que serve para verificar se o objecto
+	 * que iremos receber a sua versao e compativel com a versao
+	 * com a classe utilizada durante a serializacao
+	*/
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

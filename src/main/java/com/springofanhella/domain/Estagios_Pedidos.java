@@ -1,7 +1,8 @@
 package com.springofanhella.domain;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +30,14 @@ import lombok.Setter;
 
 //uso das anotacoes do JPA (java Persistent API) para persistencia dos objectos Java no Banco de Dados
 @Entity(name = "Estagios_pedidos")
-public class Estagios_Pedidos {
+public class Estagios_Pedidos implements Serializable{
+	
+	/**
+     * variavel de control que serve para verificar se o objecto
+	 * que iremos receber a sua versao e compativel com a versao
+	 * com a classe utilizada durante a serializacao
+	*/
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
