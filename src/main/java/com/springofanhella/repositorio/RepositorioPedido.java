@@ -3,10 +3,9 @@ package com.springofanhella.repositorio;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.springofanhella.domain.Estagios_Pedidos;
+
 import com.springofanhella.domain.Pedido;
 
 /**
@@ -19,7 +18,7 @@ import com.springofanhella.domain.Pedido;
 @Repository
 public interface RepositorioPedido extends JpaRepository<Pedido, Long> {
 	
-	public List<Pedido> findAllUsuarioId(Long id);
+	public List<Pedido> findAllByUsuarioId(Long id);
 	
 
 }
