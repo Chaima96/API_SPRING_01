@@ -16,7 +16,7 @@ import com.springofanhella.domain.Usuario;
  */
 
 @Repository
-public interface RepositoriUsuario extends JpaRepository<Usuario, Long>  {
+public interface RepositorioUsuario extends JpaRepository<Usuario, Long>  {
 	
 	
 	@Query("SELECT FROM usuarios WHERE email = ?1 AND password = ?2")
