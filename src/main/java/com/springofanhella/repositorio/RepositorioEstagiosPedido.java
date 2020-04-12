@@ -22,6 +22,6 @@ public interface RepositorioEstagiosPedido extends JpaRepository<Estagios_Pedido
 
 	public List<Estagios_Pedidos> findAllByPedidoId(Long id);
 	
-	@Query("UPDATE Pedido SET estadosPedido = ?2 WHERE id = ?1")
+	@Query("UPDATE pedidos SET estadosPedido = ?2 WHERE id = ?1")
 	public Pedido upDateEstado(Long id, Estados_Pedidos estado);
 }

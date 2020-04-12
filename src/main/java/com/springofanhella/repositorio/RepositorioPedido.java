@@ -20,5 +20,4 @@ public interface RepositorioPedido extends JpaRepository<Pedido, Long> {
 	
 	public List<Pedido> findAllByUsuarioId(Long id);
 	
-
 }
