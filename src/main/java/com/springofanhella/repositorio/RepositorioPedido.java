@@ -3,10 +3,13 @@ package com.springofanhella.repositorio;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import com.springofanhella.domain.Pedido;
+import com.springofanhella.domain.enums.Estados_Pedidos;
 
 /**
  * @author Chaima
@@ -19,5 +22,10 @@ import com.springofanhella.domain.Pedido;
 public interface RepositorioPedido extends JpaRepository<Pedido, Long> {
 	
 	public List<Pedido> findAllByUsuarioId(Long id);
+	
+	@Transactional(readOnly = false)
+	@Modifying
+	@Query("UPDATE pedidos SET estadosPedido = ?2 WHERE id = ?1")
+	public int upDateEstado(Long id, Estados_Pedidos estado);
 	
 }

@@ -72,4 +72,12 @@ public class RepositorioPedidoTests {
 		
 		assertThat(pedidos.size()).isEqualTo(1);
 	}
+	
+	@Test
+	public void updateEstadoTest() {
+		
+		int linhasAfectadas = respositorioPedido.upDateEstado(1L, Estados_Pedidos.EMPROCESSO);
+		
+		assertThat(linhasAfectadas).isEqualTo(1);
+	}
 }
