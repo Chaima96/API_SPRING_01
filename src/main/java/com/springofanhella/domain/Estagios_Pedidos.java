@@ -46,7 +46,7 @@ public class Estagios_Pedidos implements Serializable{
 	@Column(columnDefinition = "text")
 	private String descricao;
 	
-	@Column(name = "data_realizacao", nullable = false)
+	@Column(name = "data_realizacao", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataRealizacao;
 	
