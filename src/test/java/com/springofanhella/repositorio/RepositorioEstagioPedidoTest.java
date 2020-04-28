@@ -52,7 +52,7 @@ public class RepositorioEstagioPedidoTest {
 	@Test
     public void listarByEstadoIdTest() {
 		
-    	List<Estagios_Pedidos> lista = estagios.findAll();
+    	List<Estagios_Pedidos> lista = estagios.findAllByPedidoId(1L);
     	
     	assertThat(lista.size()).isEqualTo(1); 
     	
