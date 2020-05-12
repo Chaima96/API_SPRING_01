@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springofanhella.domain.Estagios_Pedidos;
 import com.springofanhella.domain.Pedido;
+import com.springofanhella.servicos.ServicoEstagiosPedido;
 import com.springofanhella.servicos.ServicoPedido;
 
 @RestController
@@ -21,6 +23,7 @@ import com.springofanhella.servicos.ServicoPedido;
 public class RecursoPedido {
 
 	@Autowired private ServicoPedido servico;
+	@Autowired private ServicoEstagiosPedido servicoEP;
 	
 	@PostMapping
 	public ResponseEntity<Pedido> salvar(@RequestBody Pedido p) {
@@ -49,5 +52,11 @@ public class RecursoPedido {
 		return ResponseEntity.ok(lista);
 	}
 	
+	@GetMapping("/{id}/estagios")
+	public ResponseEntity<List<Estagios_Pedidos>> listaAllEstagiosById(@PathVariable(name = "id") Long id) {
+		
+		List<Estagios_Pedidos> listaEstagios = servicoEP.listarTdosByPedidoId(id);
+		return ResponseEntity.ok(listaEstagios);
+	}
 	
 }
