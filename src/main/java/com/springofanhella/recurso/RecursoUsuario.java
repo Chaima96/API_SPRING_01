@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springofanhella.domain.Pedido;
 import com.springofanhella.domain.Usuario;
 import com.springofanhella.dto.UsuarioLoginDTO;
+import com.springofanhella.servicos.ServicoPedido;
 import com.springofanhella.servicos.ServicoUsuario;
 
 @RestController
@@ -23,6 +25,7 @@ import com.springofanhella.servicos.ServicoUsuario;
 public class RecursoUsuario {
 
 	@Autowired private ServicoUsuario servico;
+	@Autowired private ServicoPedido servicoP;
 	
 	@PostMapping
 	public ResponseEntity<Usuario> salvar(@RequestBody Usuario u) {
@@ -58,5 +61,12 @@ public class RecursoUsuario {
 		
 		Usuario ulogged = servico.login(u.getEmail(), u.getPassword());
 		return ResponseEntity.ok(ulogged);
+	}
+	
+	@GetMapping("/{id}/pedidos")
+	public ResponseEntity<List<Pedido>> listaAllPedidosById(@PathVariable(name = "id") Long id) {
+		
+		List<Pedido> listaPedidos = servicoP.ObterTdosByUsuarioId(id);
+		return ResponseEntity.ok(listaPedidos);
 	}
 }
