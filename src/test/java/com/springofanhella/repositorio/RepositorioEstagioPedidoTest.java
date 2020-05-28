@@ -29,21 +29,21 @@ public class RepositorioEstagioPedidoTest {
 	@Test
 	public void AsalvarTest() {
 		Usuario u = new Usuario();
-		u.setId(2L);
+		u.setId(3L);
 		
 		Pedido p = new Pedido();
-		p.setId(1L);
+		p.setId(3L);
 		Estagios_Pedidos estagio = new Estagios_Pedidos(null, "foi comprado novo laptop", new Date(), Estados_Pedidos.FECHADO, p, u);
 		
 		Estagios_Pedidos estagiocriado = estagios.save(estagio);
 		
-		assertThat(estagiocriado.getId()).isEqualTo(1L);
+		assertThat(estagiocriado.getId()).isEqualTo(4L);
 	}
 	
 	@Test
     public void getByIdTest() {
 		
-    	Optional<Estagios_Pedidos> resultado = estagios.findById(1L);
+    	Optional<Estagios_Pedidos> resultado = estagios.findById(4L);
     	Estagios_Pedidos estagios = resultado.get();
     	
     	assertThat(estagios.getDescricao()).isEqualTo("foi comprado novo laptop"); 
@@ -52,7 +52,7 @@ public class RepositorioEstagioPedidoTest {
 	@Test
     public void listarByEstadoIdTest() {
 		
-    	List<Estagios_Pedidos> lista = estagios.findAllByPedidoId(1L);
+    	List<Estagios_Pedidos> lista = estagios.findAllByPedidoId(3L);
     	
     	assertThat(lista.size()).isEqualTo(1); 
     	

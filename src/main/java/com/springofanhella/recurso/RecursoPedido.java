@@ -27,6 +27,7 @@ public class RecursoPedido {
 	
 	@PostMapping
 	public ResponseEntity<Pedido> salvar(@RequestBody Pedido p) {
+		
 		Pedido pcriado = servico.salvar(p);
 		return ResponseEntity.status(HttpStatus.CREATED).body(pcriado);
 	}

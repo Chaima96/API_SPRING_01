@@ -29,7 +29,7 @@ public class RepositorioPedidoTests {
 	public void AsalvarTest() {
 		
 		Usuario usuario = new Usuario();
-		usuario.setId(2L);
+		usuario.setId(4L);
 		Pedido pedido = new Pedido(null, "Novo LapTop Hp", "Predendo Obter Novo PC HP", new Date(), Estados_Pedidos.ABERTO, usuario, null);
 		Pedido novoPedido = respositorioPedido.save(pedido);
 		
@@ -41,7 +41,7 @@ public class RepositorioPedidoTests {
 	public void updateTest() {
 		
 		Usuario usuario = new Usuario();
-		usuario.setId(2L);
+		usuario.setId(4L);
 		Pedido pedido = new Pedido(1L, "Novo LapTop Hp", "Predendo Obter Novo PC HP Pavilion", null, Estados_Pedidos.ABERTO, usuario, null);
 		Pedido PedidoActualizado = respositorioPedido.save(pedido);
 		
