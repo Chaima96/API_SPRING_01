@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springofanhella.domain.enums.Estados_Pedidos;
 
 import lombok.AllArgsConstructor;
@@ -64,6 +64,7 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "id_usuario", nullable = false)
 	private Usuario usuario;
 	
+	@Getter(onMethod = @__({@JsonIgnore}))
 	@OneToMany(mappedBy = "pedido")
 	private List<Estagios_Pedidos> estagiosPedido = new ArrayList<Estagios_Pedidos>();
 
