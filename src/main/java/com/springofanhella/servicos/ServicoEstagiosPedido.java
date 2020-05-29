@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.springofanhella.domain.Estagios_Pedidos;
 import com.springofanhella.domain.enums.Estados_Pedidos;
+import com.springofanhella.excecao.NaoEncontradoException;
 import com.springofanhella.repositorio.RepositorioEstagiosPedido;
 import com.springofanhella.repositorio.RepositorioPedido;
 
@@ -31,7 +32,7 @@ public class ServicoEstagiosPedido {
 	public Estagios_Pedidos obterById(Long id) {
 		
 		Optional<Estagios_Pedidos> result = servicoEP.findById(id);
-		return result.get();
+		return result.orElseThrow(() -> new NaoEncontradoException("Nao existe Estagio do Pedido com ID = " + id));
 	}
 	
 	public List<Estagios_Pedidos> listarTdosByPedidoId(Long id) {

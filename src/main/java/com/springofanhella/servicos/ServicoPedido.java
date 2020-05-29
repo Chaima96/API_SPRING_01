@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.springofanhella.domain.Pedido;
 import com.springofanhella.domain.enums.Estados_Pedidos;
+import com.springofanhella.excecao.NaoEncontradoException;
 import com.springofanhella.repositorio.RepositorioPedido;
 
 @Service
@@ -33,7 +34,7 @@ public class ServicoPedido {
 	public Pedido obterById(Long id) {
 		
 		Optional<Pedido> result = servicoP.findById(id);
-		return result.get();
+		return result.orElseThrow(() -> new NaoEncontradoException("Nao existe Pedido com ID = " + id));
 	}
 	
 	public List<Pedido> obterTodos() {

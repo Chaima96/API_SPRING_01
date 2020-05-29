@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springofanhella.domain.Usuario;
+import com.springofanhella.excecao.NaoEncontradoException;
 import com.springofanhella.repositorio.RepositorioUsuario;
 import com.springofanhella.servicos.util.HashUtil;
 
@@ -39,8 +40,8 @@ public class ServicoUsuario {
 	
 	public Usuario obterById(Long id) {
 		
-		Optional<Usuario> u = servicoU.findById(id);
-		return u.get();
+		Optional<Usuario> result = servicoU.findById(id);
+		return result.orElseThrow(() -> new NaoEncontradoException("Nao existe usuario com ID = " + id));
 	}
 	
 	public List<Usuario> listarTodos() {
