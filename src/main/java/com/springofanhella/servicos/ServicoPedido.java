@@ -5,11 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springofanhella.domain.Pedido;
 import com.springofanhella.domain.enums.Estados_Pedidos;
 import com.springofanhella.excecao.NaoEncontradoException;
+import com.springofanhella.modelo.PageModel;
+import com.springofanhella.modelo.PageRequestModel;
 import com.springofanhella.repositorio.RepositorioPedido;
 
 @Service
@@ -43,9 +48,27 @@ public class ServicoPedido {
 		return lista;
 	}
 	
+     public PageModel<Pedido> listAllOnLazzyMode(PageRequestModel pr) {
+		
+		Pageable pageable = PageRequest.of(pr.getPagina(), pr.getTamanho());
+		Page<Pedido> page = servicoP.findAll(pageable);
+		
+		PageModel<Pedido> pm = new PageModel<>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());
+		return pm;
+	}
+	
 	public List<Pedido> ObterTdosByUsuarioId(Long id) {
 		
 		List<Pedido> lista = servicoP.findAllByUsuarioId(id);
 		return lista;
+	}
+	
+	public PageModel<Pedido> ObterTdosByUsuarioIdOnLazzyMode(Long id, PageRequestModel  pr) {
+		
+		Pageable pageable = PageRequest.of(pr.getPagina(), pr.getTamanho());
+		Page<Pedido> page = servicoP.findAllByUsuarioId(id, pageable);
+		
+		PageModel<Pedido> pm = new PageModel<>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());
+		return pm;
 	}
 }

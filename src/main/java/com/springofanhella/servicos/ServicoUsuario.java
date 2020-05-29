@@ -4,10 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springofanhella.domain.Usuario;
 import com.springofanhella.excecao.NaoEncontradoException;
+import com.springofanhella.modelo.PageModel;
+import com.springofanhella.modelo.PageRequestModel;
 import com.springofanhella.repositorio.RepositorioUsuario;
 import com.springofanhella.servicos.util.HashUtil;
 
@@ -48,6 +53,15 @@ public class ServicoUsuario {
 		
 		List<Usuario> lista = servicoU.findAll();
 		return lista;
+	}
+	
+	public PageModel<Usuario> listAllOnLazzyMode(PageRequestModel pr) {
+		
+		Pageable pageable = PageRequest.of(pr.getPagina(), pr.getTamanho());
+		Page<Usuario> page = servicoU.findAll(pageable);
+		
+		PageModel<Usuario> pm = new PageModel<>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());
+		return pm;
 	}
 	
 	public Usuario login(String email, String password) {

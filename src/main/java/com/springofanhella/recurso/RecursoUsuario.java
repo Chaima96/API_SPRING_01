@@ -1,7 +1,7 @@
 package com.springofanhella.recurso;
 
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springofanhella.domain.Pedido;
 import com.springofanhella.domain.Usuario;
 import com.springofanhella.dto.UsuarioLoginDTO;
+import com.springofanhella.modelo.PageModel;
+import com.springofanhella.modelo.PageRequestModel;
 import com.springofanhella.servicos.ServicoPedido;
 import com.springofanhella.servicos.ServicoUsuario;
 
@@ -49,11 +52,21 @@ public class RecursoUsuario {
 		return ResponseEntity.ok(u);
 	}
 	
+	/*
 	@GetMapping
 	public ResponseEntity<List<Usuario>> listarAll() {
 		
 		List<Usuario> lista = servico.listarTodos();
 		return ResponseEntity.ok(lista);
+	}
+	*/
+	
+	@GetMapping
+	public ResponseEntity<PageModel<Usuario>> listarAll(@RequestParam(value = "pagina") int pagina, @RequestParam(value = "tamanho") int tamanho ) {
+		
+		PageRequestModel pr = new PageRequestModel(pagina, tamanho);
+		PageModel<Usuario> pm = servico.listAllOnLazzyMode(pr);
+		return ResponseEntity.ok(pm);
 	}
 	
 	@PostMapping("/login")
@@ -63,10 +76,20 @@ public class RecursoUsuario {
 		return ResponseEntity.ok(ulogged);
 	}
 	
+	/*
 	@GetMapping("/{id}/pedidos")
 	public ResponseEntity<List<Pedido>> listaAllPedidosById(@PathVariable(name = "id") Long id) {
 		
 		List<Pedido> listaPedidos = servicoP.ObterTdosByUsuarioId(id);
 		return ResponseEntity.ok(listaPedidos);
+	}
+	*/
+	
+	@GetMapping("/{id}/pedidos")
+	public ResponseEntity<PageModel<Pedido>> listaAllPedidosById(@PathVariable(name = "id") Long id, @RequestParam(value = "pagina") int pagina, @RequestParam(value = "tamanho") int tamanho ) {
+		
+		PageRequestModel pr = new PageRequestModel(pagina, tamanho);
+		PageModel<Pedido> pm = servicoP.ObterTdosByUsuarioIdOnLazzyMode(id, pr);
+		return ResponseEntity.ok(pm);
 	}
 }

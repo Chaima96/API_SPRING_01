@@ -1,6 +1,5 @@
 package com.springofanhella.recurso;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springofanhella.domain.Estagios_Pedidos;
 import com.springofanhella.domain.Pedido;
+import com.springofanhella.modelo.PageModel;
+import com.springofanhella.modelo.PageRequestModel;
 import com.springofanhella.servicos.ServicoEstagiosPedido;
 import com.springofanhella.servicos.ServicoPedido;
 
@@ -46,18 +48,38 @@ public class RecursoPedido {
 		return ResponseEntity.ok(p);
 	}
 	
+	/*
 	@GetMapping
 	public ResponseEntity<List<Pedido >> listaAll() {
 		
 		List<Pedido> lista = servico.obterTodos();
 		return ResponseEntity.ok(lista);
 	}
+	*/
 	
+	@GetMapping
+	public ResponseEntity<PageModel<Pedido>> listarAll(@RequestParam(value = "pagina") int pagina, @RequestParam(value = "tamanho") int tamanho ) {
+		
+		PageRequestModel pr = new PageRequestModel(pagina, tamanho);
+		PageModel<Pedido> pm = servico.listAllOnLazzyMode(pr);
+		return ResponseEntity.ok(pm);
+	}
+	
+	/*
 	@GetMapping("/{id}/estagios")
 	public ResponseEntity<List<Estagios_Pedidos>> listaAllEstagiosById(@PathVariable(name = "id") Long id) {
 		
 		List<Estagios_Pedidos> listaEstagios = servicoEP.listarTdosByPedidoId(id);
 		return ResponseEntity.ok(listaEstagios);
+	}
+	*/
+	
+	@GetMapping("/{id}/estagios")
+	public ResponseEntity<PageModel<Estagios_Pedidos>> listaAllEstagiosById(@PathVariable(name = "id") Long id, @RequestParam(value = "pagina") int pagina, @RequestParam(value = "tamanho") int tamanho) {
+		
+		PageRequestModel pr = new PageRequestModel(pagina, tamanho);
+		PageModel<Estagios_Pedidos> pm = servicoEP.listarTdosByPedidoIdOnLazzyMode(id, pr);
+		return ResponseEntity.ok(pm);
 	}
 	
 }

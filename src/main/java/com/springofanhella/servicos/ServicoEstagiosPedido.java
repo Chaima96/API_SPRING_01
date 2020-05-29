@@ -5,11 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springofanhella.domain.Estagios_Pedidos;
 import com.springofanhella.domain.enums.Estados_Pedidos;
 import com.springofanhella.excecao.NaoEncontradoException;
+import com.springofanhella.modelo.PageModel;
+import com.springofanhella.modelo.PageRequestModel;
 import com.springofanhella.repositorio.RepositorioEstagiosPedido;
 import com.springofanhella.repositorio.RepositorioPedido;
 
@@ -39,5 +44,15 @@ public class ServicoEstagiosPedido {
 		
 		List<Estagios_Pedidos> lista = servicoEP.findAllByPedidoId(id);
 		return lista;
+	}
+	
+
+	public PageModel<Estagios_Pedidos> listarTdosByPedidoIdOnLazzyMode(Long id, PageRequestModel  pr) {
+		
+		Pageable pageable = PageRequest.of(pr.getPagina(), pr.getTamanho());
+		Page<Estagios_Pedidos> page = servicoEP.findAllByPedidoId(id, pageable);
+		
+		PageModel<Estagios_Pedidos> pm = new PageModel<>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());
+		return pm;
 	}
 }
