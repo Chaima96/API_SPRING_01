@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springofanhella.domain.Pedido;
 import com.springofanhella.domain.Usuario;
+import com.springofanhella.dto.ActualizacaoUsuarioDTO;
 import com.springofanhella.dto.UsuarioLoginDTO;
 import com.springofanhella.modelo.PageModel;
 import com.springofanhella.modelo.PageRequestModel;
@@ -96,5 +98,18 @@ public class RecursoUsuario {
 		PageRequestModel pr = new PageRequestModel(pagina, tamanho);
 		PageModel<Pedido> pm = servicoP.ObterTdosByUsuarioIdOnLazzyMode(id, pr);
 		return ResponseEntity.ok(pm);
+	}
+	
+	@PatchMapping("/role/{id}")
+	public ResponseEntity<?> updateRole(@PathVariable(name = "id") Long id, @RequestBody ActualizacaoUsuarioDTO udto) {
+		
+		Usuario usuario = new Usuario();
+		usuario.setId(id);
+		usuario.setRole(udto.getRole());
+		
+		servico.UpdateRole(usuario);
+		
+		return ResponseEntity.ok().build();
+		
 	}
 }

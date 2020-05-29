@@ -69,4 +69,9 @@ public class ServicoUsuario {
 		Optional<Usuario> u = servicoU.login(email, password);
 		return u.get();
 	}
+	
+	public int UpdateRole(Usuario u) {
+		
+		return servicoU.updateRole(u.getId(), u.getRole());
+	}
 }
