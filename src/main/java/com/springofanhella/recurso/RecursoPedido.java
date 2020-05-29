@@ -58,7 +58,9 @@ public class RecursoPedido {
 	*/
 	
 	@GetMapping
-	public ResponseEntity<PageModel<Pedido>> listarAll(@RequestParam(value = "pagina") int pagina, @RequestParam(value = "tamanho") int tamanho ) {
+	public ResponseEntity<PageModel<Pedido>> listarAll(
+			@RequestParam(value = "pagina", defaultValue = "0") int pagina, 
+			@RequestParam(value = "tamanho", defaultValue = "10") int tamanho ) {
 		
 		PageRequestModel pr = new PageRequestModel(pagina, tamanho);
 		PageModel<Pedido> pm = servico.listAllOnLazzyMode(pr);
@@ -75,7 +77,10 @@ public class RecursoPedido {
 	*/
 	
 	@GetMapping("/{id}/estagios")
-	public ResponseEntity<PageModel<Estagios_Pedidos>> listaAllEstagiosById(@PathVariable(name = "id") Long id, @RequestParam(value = "pagina") int pagina, @RequestParam(value = "tamanho") int tamanho) {
+	public ResponseEntity<PageModel<Estagios_Pedidos>> listaAllEstagiosById(
+			@PathVariable(name = "id") Long id,
+			@RequestParam(value = "pagina", defaultValue = "0") int pagina, 
+			@RequestParam(value = "tamanho", defaultValue = "10") int tamanho) {
 		
 		PageRequestModel pr = new PageRequestModel(pagina, tamanho);
 		PageModel<Estagios_Pedidos> pm = servicoEP.listarTdosByPedidoIdOnLazzyMode(id, pr);
