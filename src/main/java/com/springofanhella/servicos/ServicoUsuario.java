@@ -66,8 +66,8 @@ public class ServicoUsuario {
 	
 	public Usuario login(String email, String password) {
 		password = HashUtil.getSecureHash(password);
-		Optional<Usuario> u = servicoU.login(email, password);
-		return u.get();
+		Optional<Usuario> result = servicoU.login(email, password);
+		return result.get();
 	}
 	
 	public int UpdateRole(Usuario u) {
