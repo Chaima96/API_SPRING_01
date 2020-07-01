@@ -1,5 +1,7 @@
 package com.springofanhella.recurso;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springofanhella.domain.Estagios_Pedidos;
+import com.springofanhella.dto.EstadosPedidoSaveDTO;
 import com.springofanhella.servicos.ServicoEstagiosPedido;
 
 @RestController
@@ -20,8 +23,9 @@ public class RecursoEstagioPedido {
 	@Autowired private ServicoEstagiosPedido servico;
 	
 	@PostMapping
-	public ResponseEntity<Estagios_Pedidos> salvar(@RequestBody Estagios_Pedidos ep) {
+	public ResponseEntity<Estagios_Pedidos> salvar(@RequestBody @Valid EstadosPedidoSaveDTO epdto) {
 		
+		Estagios_Pedidos ep = epdto.transformToEs();
 		Estagios_Pedidos epcriado = servico.salvar(ep);
 		return ResponseEntity.status(HttpStatus.CREATED).body(epcriado);
 	}
