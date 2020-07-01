@@ -1,6 +1,8 @@
 package com.springofanhella.recurso;
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springofanhella.domain.Estagios_Pedidos;
 import com.springofanhella.domain.Pedido;
+import com.springofanhella.dto.PedidoUpdateDTO;
+import com.springofanhella.dto.PedidosaveDTO;
 import com.springofanhella.modelo.PageModel;
 import com.springofanhella.modelo.PageRequestModel;
 import com.springofanhella.servicos.ServicoEstagiosPedido;
@@ -28,14 +32,17 @@ public class RecursoPedido {
 	@Autowired private ServicoEstagiosPedido servicoEP;
 	
 	@PostMapping
-	public ResponseEntity<Pedido> salvar(@RequestBody Pedido p) {
+	public ResponseEntity<Pedido> salvar(@RequestBody @Valid PedidosaveDTO pdto) {
 		
+		Pedido p = pdto.transformToP();
 		Pedido pcriado = servico.salvar(p);
 		return ResponseEntity.status(HttpStatus.CREATED).body(pcriado);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Pedido> actualizado(@PathVariable(name = "id") Long id, @RequestBody Pedido p) {
+	public ResponseEntity<Pedido> actualizado(@PathVariable(name = "id") Long id, @RequestBody @Valid PedidoUpdateDTO pdto) {
+		
+		Pedido p = pdto.transformToP();
 		p.setId(id);
 		Pedido pactualiozado = servico.actualizar(p);
 		return ResponseEntity.ok(pactualiozado);
