@@ -1,11 +1,11 @@
 package com.springofanhella.recurso;
 
-
-
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +20,15 @@ import com.springofanhella.domain.Pedido;
 import com.springofanhella.domain.Usuario;
 import com.springofanhella.dto.ActualizacaoUsuarioDTO;
 import com.springofanhella.dto.UsuarioLoginDTO;
+import com.springofanhella.dto.UsuarioSaveDTO;
+import com.springofanhella.dto.UsuarioUpdateDTO;
 import com.springofanhella.modelo.PageModel;
 import com.springofanhella.modelo.PageRequestModel;
 import com.springofanhella.servicos.ServicoPedido;
 import com.springofanhella.servicos.ServicoUsuario;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "usuarios")
 public class RecursoUsuario {
 
@@ -33,15 +36,17 @@ public class RecursoUsuario {
 	@Autowired private ServicoPedido servicoP;
 	
 	@PostMapping
-	public ResponseEntity<Usuario> salvar(@RequestBody Usuario u) {
+	public ResponseEntity<Usuario> salvar(@RequestBody @Valid UsuarioSaveDTO udto) {
 		
-		Usuario ucriado = servico.salvar(u);
+		Usuario usuatioTosave = udto.transforToUser();
+		Usuario ucriado = servico.salvar(usuatioTosave);
 		return ResponseEntity.status(HttpStatus.CREATED).body(ucriado);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Usuario> actualizar( @PathVariable(name = "id") Long id, @RequestBody Usuario u) {
+	public ResponseEntity<Usuario> actualizar( @PathVariable(name = "id") Long id, @RequestBody @Valid UsuarioUpdateDTO udto) {
 		
+		Usuario u = udto.transforToUser();
 		u.setId(id);
 		Usuario uactualizado = servico.actualizar(u);
 		return ResponseEntity.ok(uactualizado);
@@ -74,7 +79,7 @@ public class RecursoUsuario {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<Usuario> login(@RequestBody UsuarioLoginDTO u) {
+	public ResponseEntity<Usuario> login(@RequestBody @Valid UsuarioLoginDTO u) {
 		
 		Usuario ulogged = servico.login(u.getEmail(), u.getPassword());
 		return ResponseEntity.ok(ulogged);
@@ -101,7 +106,7 @@ public class RecursoUsuario {
 	}
 	
 	@PatchMapping("/role/{id}")
-	public ResponseEntity<?> updateRole(@PathVariable(name = "id") Long id, @RequestBody ActualizacaoUsuarioDTO udto) {
+	public ResponseEntity<?> updateRole(@PathVariable(name = "id") Long id, @RequestBody @Valid ActualizacaoUsuarioDTO udto) {
 		
 		Usuario usuario = new Usuario();
 		usuario.setId(id);
